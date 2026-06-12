@@ -2,15 +2,22 @@ import 'package:flutter/material.dart';
 import '../models/job.dart';
 import '../theme/colors.dart';
 import '../widgets/animated_list_item.dart';
+import '../widgets/scale_tap.dart';
 
 class ProfileScreen extends StatefulWidget {
   final List<Job> jobs;
   final Function() onGoToHome;
+  final String userName;
+  final String userEmail;
+  final VoidCallback onLogout;
 
   const ProfileScreen({
     super.key,
     required this.jobs,
     required this.onGoToHome,
+    required this.userName,
+    required this.userEmail,
+    required this.onLogout,
   });
 
   @override
@@ -110,7 +117,8 @@ class _ProfileScreenState extends State<ProfileScreen>
       body: FadeTransition(
         opacity: _fadeAnimation,
         child: SingleChildScrollView(
-        padding: EdgeInsets.fromLTRB(
+          physics: const BouncingScrollPhysics(),
+          padding: EdgeInsets.fromLTRB(
           20, 20, 20,
           MediaQuery.of(context).padding.bottom + 116,
         ),
@@ -130,9 +138,11 @@ class _ProfileScreenState extends State<ProfileScreen>
                   CircleAvatar(
                     radius: 36,
                     backgroundColor: AppColors.primary,
-                    child: const Text(
-                      'RP',
-                      style: TextStyle(
+                    child: Text(
+                      widget.userName.isNotEmpty
+                          ? widget.userName.split(' ').map((e) => e.isNotEmpty ? e[0].toUpperCase() : '').take(2).join()
+                          : 'U',
+                      style: const TextStyle(
                         fontSize: 22,
                         fontWeight: FontWeight.bold,
                         color: Colors.white,
@@ -144,9 +154,9 @@ class _ProfileScreenState extends State<ProfileScreen>
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const Text(
-                          'Rian Pratama',
-                          style: TextStyle(
+                        Text(
+                          widget.userName,
+                          style: const TextStyle(
                             fontSize: 18,
                             fontWeight: FontWeight.bold,
                             color: AppColors.textDark,
@@ -158,6 +168,14 @@ class _ProfileScreenState extends State<ProfileScreen>
                           style: TextStyle(
                             fontSize: 13,
                             color: AppColors.textDark.withValues(alpha: 0.6),
+                          ),
+                        ),
+                        const SizedBox(height: 2),
+                        Text(
+                          widget.userEmail,
+                          style: TextStyle(
+                            fontSize: 12,
+                            color: Colors.grey.shade500,
                           ),
                         ),
                         const SizedBox(height: 8),
@@ -602,6 +620,35 @@ class _ProfileScreenState extends State<ProfileScreen>
                   );
                 },
               ),
+            const SizedBox(height: 32),
+            ScaleTap(
+              onTap: widget.onLogout,
+              child: Container(
+                width: double.infinity,
+                padding: const EdgeInsets.symmetric(vertical: 14),
+                decoration: BoxDecoration(
+                  color: Colors.red.shade50.withValues(alpha: 0.7),
+                  borderRadius: BorderRadius.circular(12),
+                  border: Border.all(color: Colors.red.shade200),
+                ),
+                alignment: Alignment.center,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Icon(Icons.logout_rounded, color: Colors.red.shade700, size: 18),
+                    const SizedBox(width: 8),
+                    Text(
+                      'Keluar dari Akun',
+                      style: TextStyle(
+                        color: Colors.red.shade700,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 14,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
           ],
         ),
       ),

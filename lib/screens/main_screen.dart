@@ -6,6 +6,7 @@ import '../widgets/scale_tap.dart';
 import 'home_screen.dart';
 import 'saved_screen.dart';
 import 'profile_screen.dart';
+import 'login_screen.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({super.key});
@@ -17,6 +18,11 @@ class MainScreen extends StatefulWidget {
 class _MainScreenState extends State<MainScreen> {
   int _currentIndex = 0;
   late List<Job> _jobsList;
+  
+  // Login State
+  bool _isLoggedIn = false;
+  String _userEmail = '';
+  String _userName = '';
 
   @override
   void initState() {
@@ -83,9 +89,29 @@ class _MainScreenState extends State<MainScreen> {
           onGoToHome: _goToHome,
         );
       case 2:
+        if (!_isLoggedIn) {
+          return LoginScreen(
+            onLoginSuccess: (email, name) {
+              setState(() {
+                _isLoggedIn = true;
+                _userEmail = email;
+                _userName = name;
+              });
+            },
+          );
+        }
         return ProfileScreen(
           jobs: _jobsList,
           onGoToHome: _goToHome,
+          userName: _userName,
+          userEmail: _userEmail,
+          onLogout: () {
+            setState(() {
+              _isLoggedIn = false;
+              _userEmail = '';
+              _userName = '';
+            });
+          },
         );
       default:
         return HomeScreen(
