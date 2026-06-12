@@ -29,7 +29,8 @@
     1. **Device Preview Dihapus:** Dependency `device_preview` telah dihapus sepenuhnya dari `pubspec.yaml` dan `lib/main.dart`. Aplikasi saat ini langsung memuat aplikasi utama secara penuh.
     2. **144 FPS Support:** Ditambahkan package `flutter_displaymode: ^0.7.0` untuk mengaktifkan mode high refresh rate (90Hz/120Hz/144Hz) secara dinamis pada perangkat Android yang mendukung.
     3. **NDK Fix:** Dikonfigurasi menggunakan NDK versi `"30.0.14904198"` secara statis pada gradle untuk menghindari error file corrupt pada NDK default.
-    4. **Release APK Berhasil:** Sukses build di `build/app/outputs/flutter-apk/app-release.apk` (46.1 MB).
+    4. **Sistem Login Premium & Animasi Scroll:** Ditambahkan `lib/screens/login_screen.dart` dengan UI Glassmorphic, `BouncingScrollPhysics` di halaman login & profil, serta animasi staggered entrance `AnimatedListItem` saat memuat login.
+    5. **Release APK Berhasil:** Sukses build di `build/app/outputs/flutter-apk/app-release.apk` (46.1 MB).
                                                                                                                                       
     **Instruksi Ketat untuk Anda (Agent Berikutnya):**                                                                                
     1. **Pertahankan Gaya Desain:** Jika Anda diminta membuat halaman atau komponen baru, WAJIB menggunakan palet warna dari          
